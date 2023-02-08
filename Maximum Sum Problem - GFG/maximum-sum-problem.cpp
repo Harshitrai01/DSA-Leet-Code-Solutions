@@ -6,12 +6,19 @@ using namespace std;
 class Solution
 {
     public:
-    
+        
         int maxSum(int n)
         {
-            if(n==1 or n==0)
-                return n;
-            return max(n/2,maxSum(n/2))+max(n/3,maxSum(n/3))+max(n/4,maxSum(n/4)); 
+            vector<int>dp(n+1);
+            dp[0]=0;
+            dp[1]=1;
+            
+            for(int i=2;i<=n;i++){
+                dp[i]=max(i/2,dp[i/2])+max(i/3,dp[i/3])+max(i/4,dp[i/4]);
+            }
+            
+            return dp[n];
+
         }
 };
 
