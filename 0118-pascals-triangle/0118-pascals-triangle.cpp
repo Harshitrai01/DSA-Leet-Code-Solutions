@@ -4,13 +4,8 @@ public:
         int n=numRows;
         vector<vector<int>>ans;
         vector<int>dp;
-
-        dp.push_back(1); ans.push_back(dp);
-        if(n==1) return ans;
-        dp.push_back(1); ans.push_back(dp);
-        if(n==2) return ans;
         
-        for(int i=2;i<n;i++){
+        for(int i=0;i<n;i++){
             vector<int>dp1(dp);
             dp1.resize(i+1);
             dp1[0]=1;
