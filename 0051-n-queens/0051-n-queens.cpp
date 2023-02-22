@@ -31,16 +31,16 @@ public:
         
         
         for(int row=0;row<n;row++){
-            if(leftRow[row]==0 and lowerDaigonal[row+col]==0 and upperDaigonal[n-1+col-row]==0){
+            if(leftRow[row]==0 and lowerDaigonal[row+col]==0 and upperDaigonal[col-row]==0){
                 board[row][col]=1;
                 leftRow[row]=1;
                 lowerDaigonal[row+col]=1;
-                upperDaigonal[n-1+col-row]=1;
+                upperDaigonal[col-row]=1;
                 solve(col+1,ans,board,n,leftRow,upperDaigonal,lowerDaigonal);
                 board[row][col]=0;
                 leftRow[row]=0;
                 lowerDaigonal[row+col]=0;
-                upperDaigonal[n-1+col-row]=0;
+                upperDaigonal[col-row]=0;
             }
         }
         
