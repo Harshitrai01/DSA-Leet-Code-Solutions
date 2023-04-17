@@ -9,20 +9,13 @@ using namespace std;
 class Solution {
   public:
   
-    void bfs(vector<int> list[], vector<bool>&vis, int i){
-        queue<int>q;
-        q.push(i);
+    void dfs(vector<int> list[], vector<bool>&vis, int i){
         vis[i]=true;
-        while(!q.empty()){
-            int u=q.front();
-            q.pop();
-            for(auto x:list[u]){
+            for(auto x:list[i]){
                 if(vis[x]==false){
-                    vis[x]=true;
-                    q.push(x);
+                    dfs(list,vis,x);
                 }
             }
-        }
     }
   
     int numProvinces(vector<vector<int>> adj, int V){
@@ -40,7 +33,7 @@ class Solution {
         for(int i=0;i<V;i++){
             if(vis[i]==false){
                 ans++;
-                bfs(list,vis,i);
+                dfs(list,vis,i);
             }
         }
         return ans;
