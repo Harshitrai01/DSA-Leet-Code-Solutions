@@ -7,15 +7,22 @@ class Solution {
   public:
     // Function to detect cycle in an undirected graph.
     
-    bool dfs(vector<int> adj[], vector<int>&vis, int s, int parent){
+    bool bfs(vector<int> adj[], vector<int>&vis, int s, int parent){
+        queue<pair<int,int>>q;
+        q.push({s,parent});
         vis[s]=1;
-        for(auto u:adj[s]){
-            if(!vis[u]){
-                if(dfs(adj,vis,u,s)==true)
-                    return true;
+        while(!q.empty()){
+            int u=q.front().first;
+            int p=q.front().second;
+            q.pop();
+            for(auto x:adj[u]){
+            if(!vis[x]){
+                vis[x]=1;
+                q.push({x,u});
             }
-            else if(u!=parent)
+            else if(x!=p)
                 return true;
+            }            
         }
         return false;
     }
@@ -24,7 +31,7 @@ class Solution {
         vector<int>vis(V,0);
         for(int i=0;i<V;i++){
             if(!vis[i]){
-                if(dfs(adj,vis,i,-1)==true)
+                if(bfs(adj,vis,i,-1)==true)
                 return true;
             }
         }
