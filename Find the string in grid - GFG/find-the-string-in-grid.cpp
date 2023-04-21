@@ -5,163 +5,35 @@ using namespace std;
 // } Driver Code Ends
 class Solution {
 public:
-    bool diagLeft1(vector<vector<char>>&grid, string word, int i, int j, int s){
+    bool dfs(vector<vector<char>>&grid, string word, int i, int j, int d1, int d2, int s){
 	    int n=grid.size();
 	    int m=grid[0].size();
         if(s==word.size())
             return true;
-        int r=i-1;
-        int c=j+1;
-        if(r>=0 and r<n and c>=0 and c<m and grid[r][c]==word[s]){
-            if(diagLeft1(grid,word,r,c,s+1))
-                return true;
-        }
-        return false;
-    }
-    
-    bool diagRight1(vector<vector<char>>&grid, string word, int i, int j, int s){
-	    int n=grid.size();
-	    int m=grid[0].size();
-        if(s==word.size())
-            return true;
-        int r=i-1;
-        int c=j-1;
-        if(r>=0 and r<n and c>=0 and c<m and grid[r][c]==word[s]){
-            if(diagRight1(grid,word,r,c,s+1))
-                return true;
-        }
-        return false;
-    }
-    
-    bool diagLeft(vector<vector<char>>&grid, string word, int i, int j, int s){
-	    int n=grid.size();
-	    int m=grid[0].size();
-        if(s==word.size())
-            return true;
-        int r=i+1;
-        int c=j-1;
-        if(r>=0 and r<n and c>=0 and c<m and grid[r][c]==word[s]){
-            if(diagLeft(grid,word,r,c,s+1))
-                return true;
-        }
-        return false;
-    }
-    
-    bool diagRight(vector<vector<char>>&grid, string word, int i, int j, int s){
-	    int n=grid.size();
-	    int m=grid[0].size();
-        if(s==word.size())
-            return true;
-        int r=i+1;
-        int c=j+1;
-        if(r>=0 and r<n and c>=0 and c<m and grid[r][c]==word[s]){
-            if(diagRight(grid,word,r,c,s+1))
-                return true;
-        }
-        return false;
-    }
-    
-    bool Right(vector<vector<char>>&grid, string word, int i, int j, int s){
-	    int n=grid.size();
-	    int m=grid[0].size();
-        if(s==word.size())
-            return true;
-        int r=i;
-        int c=j+1;
-        if(r>=0 and r<n and c>=0 and c<m and grid[r][c]==word[s]){
-            if(Right(grid,word,r,c,s+1))
-                return true;
-        }
-        return false;
-    }
-
-    bool Right1(vector<vector<char>>&grid, string word, int i, int j, int s){
-    	    int n=grid.size();
-    	    int m=grid[0].size();
-            if(s==word.size())
-                return true;
-            int r=i;
-            int c=j-1;
-            if(r>=0 and r<n and c>=0 and c<m and grid[r][c]==word[s]){
-                if(Right1(grid,word,r,c,s+1))
-                    return true;
-            }
-            return false;
-        }
+        int r=i+d1;
+        int c=j+d2;
+        if(r>=0 and r<n and c>=0 and c<m and grid[r][c]==word[s])
+            return dfs(grid,word,r,c,d1,d2,s+1);
         
-    bool Up(vector<vector<char>>&grid, string word, int i, int j, int s){
-    	    int n=grid.size();
-    	    int m=grid[0].size();
-            if(s==word.size())
-                return true;
-            int r=i+1;
-            int c=j;
-            if(r>=0 and r<n and c>=0 and c<m and grid[r][c]==word[s]){
-                if(Up(grid,word,r,c,s+1))
-                    return true;
-            }
-            return false;
-        }
-        
-    bool Down(vector<vector<char>>&grid, string word, int i, int j, int s){
-    	    int n=grid.size();
-    	    int m=grid[0].size();
-            if(s==word.size())
-                return true;
-            int r=i-1;
-            int c=j;
-            if(r>=0 and r<n and c>=0 and c<m and grid[r][c]==word[s]){
-                if(Down(grid,word,r,c,s+1))
-                    return true;
-            }
-            return false;
-        }
+        return false;
+    }
         
 	vector<vector<int>>searchWord(vector<vector<char>>grid, string word){
 	    int n=grid.size();
 	    int m=grid[0].size();
 	    vector<vector<int>>ans;
-	    vector<int>temp;
+        int drow[8]={0,-1,-1,-1,0,1,1,1};
+        int dcol[8]={-1,-1,0,1,1,1,0,-1};
 	    for(int i=0;i<n;i++){
 	        for(int j=0;j<m;j++){
 	            if(grid[i][j]==word[0]){
-                    if(diagRight(grid,word,i,j,1)){
-	                    temp.push_back(i);
-	                    temp.push_back(j);
-                    }
-                    else if(diagLeft(grid,word,i,j,1)){
-	                    temp.push_back(i);
-	                    temp.push_back(j);
-                    }
-                    else if(diagLeft1(grid,word,i,j,1)){
-	                    temp.push_back(i);
-	                    temp.push_back(j);
-                    }
-                    else if(diagRight1(grid,word,i,j,1)){
-	                    temp.push_back(i);
-	                    temp.push_back(j);
-                    }
-                    else if(Right(grid,word,i,j,1)){
-	                    temp.push_back(i);
-	                    temp.push_back(j);
-                    }
-                    else if(Right1(grid,word,i,j,1)){
-	                    temp.push_back(i);
-	                    temp.push_back(j);
-                    }
-                    else if(Up(grid,word,i,j,1)){
-	                    temp.push_back(i);
-	                    temp.push_back(j);
-                    }
-                    else if(Down(grid,word,i,j,1)){
-	                    temp.push_back(i);
-	                    temp.push_back(j);
+                    for(int k=0;k<8;k++){
+                        if(dfs(grid,word,i,j,drow[k],dcol[k],1)){
+        	               ans.push_back({i,j});
+        	               break;
+                        }
                     }
 	            }
-    	        if(temp.size()==2){
-                    ans.push_back(temp);
-    	            temp.clear();	            
-    	        }
 	        }
 	    }
 	    return ans;
