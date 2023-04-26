@@ -6,29 +6,36 @@ using namespace std;
 class Solution {
   public:
     // Function to detect cycle in a directed graph.
-    bool dfs(vector<int> adj[], vector<int> &vis, vector<int> &recSt, int s){
-        vis[s]=1;
-        recSt[s]=1;
-        for(auto u:adj[s]){
-            if(!vis[u]){
-                if(dfs(adj,vis,recSt,u))
-                    return true;
-            }
-            else if(recSt[u]==1)
-                return true;
-        }
-        recSt[s]=0;
-        return false;
-    }
+
     bool isCyclic(int V, vector<int> adj[]) {
-        vector<int>vis(V,0);
-        vector<int>recSt(V,0);
-        for(int i=0;i<V;i++){
-            if(!vis[i])
-                if(dfs(adj,vis,recSt,i))
-                    return true;
-        }
-        return false;
+	    // using TopoSort
+	    vector<int> indegree(V,0);
+	    
+	    for(int i=0;i<V;i++){
+	        for(auto x: adj[i]){
+	            indegree[x]++;
+	        }
+	    }
+	    
+	    queue<int>q;
+	    for(int i=0;i<V;i++){
+	        if(indegree[i]==0){
+	            q.push(i);
+	        }
+	    }
+	    int cnt=0;
+	    while(!q.empty()){
+	        int u=q.front();
+	        q.pop();
+	        cnt++;
+	        for(auto x:adj[u]){
+	            indegree[x]--;
+	            if(indegree[x]==0)
+	                q.push(x);
+	        }
+	    }
+	    
+	    return (cnt!=V);
     }
 };
 
