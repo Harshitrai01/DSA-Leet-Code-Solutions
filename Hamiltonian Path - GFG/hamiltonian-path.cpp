@@ -7,7 +7,7 @@ class Solution
 {
     public:
     
-    bool dfs(int i, vector<int>&vis, vector<int> adj[], int c, int n){
+    bool dfs(int i, vector<int>vis, vector<int> adj[], int c, int n){
         if(n==c)
             return true;
         vis[i]=1;
@@ -17,7 +17,7 @@ class Solution
                     return true;
             }
         }
-        vis[i]=0;
+        
         return false;
     }
     
