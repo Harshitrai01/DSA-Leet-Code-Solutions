@@ -22,8 +22,8 @@ class Solution
 	    grid[kx][ky]=1;
 	    q.push({{kx,ky},0});
 	    
-        int drow[]={-2,-2,-1,1,2,2,-1,1};
-        int dcol[]={-1,1,2,2,1,-1,-2,-2};
+        int drow[]={-2,-2,-1,-1, 1,1, 2,2};
+        int dcol[]={-1, 1,-2, 2,-2,2,-1,1};
 	    
 	    while(!q.empty()){
 	        int i=q.front().first.first;
