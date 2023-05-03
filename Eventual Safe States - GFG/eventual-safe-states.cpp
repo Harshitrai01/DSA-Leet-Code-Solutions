@@ -10,45 +10,49 @@ using namespace std;
 
 class Solution {
   public:
-    bool dfs(vector<int> adj[], vector<int> &vis, vector<int> &recSt, int s, vector<int>&check){
-        vis[s]=1;
-        recSt[s]=1;
-        check[s]=0;
-        for(auto u:adj[s]){
-            if(!vis[u]){
-                if(dfs(adj,vis,recSt,u,check)){
-                    check[u]=0;
-                    return true; 
-                }
-                    
+  
+    bool dfs(vector<int>&vis, vector<int>&pathVis, vector<int>&Check, int i, vector<int> adj[]){
+        vis[i]=1;
+        pathVis[i]=1;
+        Check[i]=0;
+        
+        for(auto x:adj[i]){
+            
+            if(!vis[x]){
+                if(dfs(vis,pathVis,Check,x,adj))
+                    return true;
             }
-            else if(recSt[u]==1){
-                check[u]=0;
-                return true;                
-            }
-
+            
+            else if(pathVis[x])
+                return true;
         }
-        check[s]=1;
-        recSt[s]=0;
+        
+        pathVis[i]=0;
+        Check[i]=1;
         return false;
     }
-
+  
     vector<int> eventualSafeNodes(int V, vector<int> adj[]) {
+        
         vector<int>vis(V,0);
-        vector<int>recSt(V,0);
+        vector<int>pathVis(V,0);
         
-        vector<int>check(V,0);
-        vector<int>safeNodes;
+        vector<int>Check(V,0);
         
         for(int i=0;i<V;i++){
-            if(!vis[i])
-                dfs(adj,vis,recSt,i,check);
+            if(!vis[i]){
+                dfs(vis,pathVis,Check,i,adj);
+            }
         }
+        
+        vector<int>ans;
         for(int i=0;i<V;i++){
-            if(check[i]==1)
-                safeNodes.push_back(i);
+            if(Check[i]==1)
+                ans.push_back(i);
         }
-        return safeNodes;
+        
+        return ans;
+        
     }
 };
 
