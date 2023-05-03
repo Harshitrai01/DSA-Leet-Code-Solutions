@@ -7,7 +7,7 @@ class Solution {
   public:
     // Function to count paths between two vertices in a directed graph.
     
-    void dfs(int s, int d, vector<int> adj[], vector<int>&vis, int &count){
+    void dfs(int s, int d, vector<int> adj[], vector<int>vis, int &count){
         
         vis[s]=1;
         if(s==d){
@@ -17,7 +17,6 @@ class Solution {
             if(!vis[x])
             dfs(x,d,adj,vis,count);
         }
-        vis[s]=0;
     }
     
     int countPaths(int V, vector<int> adj[], int source, int destination) {
