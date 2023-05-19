@@ -8,7 +8,7 @@ public:
 	bool isPossible(int N, vector<pair<int, int> >& prerequisites) {
 	    vector<int> adj[N];
 	    for(auto i: prerequisites){
-	        adj[i.first].push_back(i.second);
+	        adj[i.second].push_back(i.first);
 	    }
 	    
 	    vector<int>inDeg(N,0);
