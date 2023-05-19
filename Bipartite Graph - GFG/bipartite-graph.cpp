@@ -5,31 +5,26 @@ using namespace std;
 // } Driver Code Ends
 class Solution {
 public:
-    bool check(vector<int>graph[], vector<int>&color, int i){
-        color[i]=0;
-        queue<int>q;
-        q.push(i);
-        while(!q.empty()){
-            int u=q.front();
-            q.pop();
-            for(auto node:graph[u]){
-                if(color[node]==-1){
-                    color[node]=!color[u];
-                    q.push(node);
-                }
-                else if(color[node]==color[u])
+
+    bool dfs(vector<int>&color, vector<int>adj[], int i){
+        for(auto x:adj[i]){
+            if(color[x]==-1){
+                color[x]=!color[i];
+                if(!dfs(color,adj,x))
                     return false;
             }
+            if(color[x]==color[i])
+                return false;
         }
         return true;
     }
 
-
-	bool isBipartite(int v, vector<int>adj[]){
-        vector<int>color(v,-1);
-        for(int i=0;i<v;i++){
+	bool isBipartite(int V, vector<int>adj[]){
+        vector<int>color(V,-1);
+        for(int i=0;i<V;i++){
             if(color[i]==-1){
-                if(!check(adj,color,i))
+                color[i]=1;
+                if(!dfs(color,adj,i))
                     return false;
             }
         }
