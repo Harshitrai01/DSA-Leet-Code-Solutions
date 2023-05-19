@@ -3,7 +3,7 @@ public:
     bool canFinish(int N, vector<vector<int>>& prerequisites) {
 	    vector<int> adj[N];
 	    for(auto i: prerequisites){
-	        adj[i[0]].push_back(i[1]);
+	        adj[i[1]].push_back(i[0]);
 	    }
 	    
 	    vector<int>inDeg(N,0);
