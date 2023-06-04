@@ -10,49 +10,37 @@ using namespace std;
 
 class Solution {
   public:
-  
-    bool dfs(vector<int>&vis, vector<int>&pathVis, vector<int>&Check, int i, vector<int> adj[]){
-        vis[i]=1;
-        pathVis[i]=1;
-        Check[i]=0;
-        
-        for(auto x:adj[i]){
-            
-            if(!vis[x]){
-                if(dfs(vis,pathVis,Check,x,adj))
-                    return true;
-            }
-            
-            else if(pathVis[x])
-                return true;
-        }
-        
-        pathVis[i]=0;
-        Check[i]=1;
-        return false;
-    }
-  
+//   Using BFS and topo;ogical sorting by reversing the edges.
     vector<int> eventualSafeNodes(int V, vector<int> adj[]) {
-        
-        vector<int>vis(V,0);
-        vector<int>pathVis(V,0);
-        
-        vector<int>Check(V,0);
-        
+        vector<int>adjRev[V];
+        int indeg[V]={0};
         for(int i=0;i<V;i++){
-            if(!vis[i]){
-                dfs(vis,pathVis,Check,i,adj);
+            // i->it;
+            // it->i;Reversing the edges
+            for(auto it:adj[i]){
+                adjRev[it].push_back(i);
+                indeg[i]++;
             }
         }
         
-        vector<int>ans;
+        queue<int>q;
+        vector<int>safeNodes;
         for(int i=0;i<V;i++){
-            if(Check[i]==1)
-                ans.push_back(i);
+            if(indeg[i]==0)
+                q.push(i);
         }
-        
-        return ans;
-        
+        while(!q.empty()){
+            int node=q.front();
+            q.pop();
+            safeNodes.push_back(node);
+            for(auto x:adjRev[node]){
+                indeg[x]--;
+                if(indeg[x]==0)
+                q.push(x);
+            }
+        }
+        sort(safeNodes.begin(),safeNodes.end());
+        return safeNodes;
     }
 };
 
