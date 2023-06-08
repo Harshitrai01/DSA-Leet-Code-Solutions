@@ -44,9 +44,12 @@ class Solution {
         vector<int>dist(N,1e9);
         dist[0]=0;
         for(int i=0;i<N;i++){
-            for(auto x:adj[topoSort[i]]){
-                if(dist[x.first]>dist[topoSort[i]]+x.second)
-                    dist[x.first]=dist[topoSort[i]]+x.second;
+            int u=topoSort[i];
+            for(auto x:adj[u]){
+                int v=x.first;
+                int wt_u_to_v=x.second;
+                if(dist[v]>dist[u]+wt_u_to_v)
+                    dist[v]=dist[u]+wt_u_to_v;
             }
         }
         for(int i=0;i<N;i++){
