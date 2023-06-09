@@ -20,12 +20,15 @@ class Solution {
         q.push(src);
         vector<int>dist(N,1e9);
         dist[src]=0;
+        vector<int>vis(N,0);
         while(!q.empty()){
             int u=q.front();
             q.pop();
+            vis[u]=1;
             for(auto v:adj[u]){
-                if(dist[v]>dist[u]+1){
+                if(!vis[v]){
                     dist[v]=dist[u]+1;
+                    vis[v]=1;
                     q.push(v);
                 }
             }
