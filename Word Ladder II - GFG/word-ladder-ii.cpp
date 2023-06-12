@@ -27,12 +27,11 @@ public:
                 for(auto it:usedOnLevel){
                     st.erase(it);
                 }
+                usedOnLevel.clear();
             }
             string word=vec.back();
             if(word==endWord){
-                // if(ans.size()==0){
-                    ans.push_back(vec);
-                // }
+                ans.push_back(vec);
             }
             for(int i=0;i<word.size();i++){
                 char original=word[i];
