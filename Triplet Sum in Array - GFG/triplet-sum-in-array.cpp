@@ -11,7 +11,6 @@ class Solution{
     bool find3Numbers(int A[], int n, int X)
     {
         unordered_set<int>us;
-        map<int,int>mp1;
     
         for(int i=0;i<n;i++){
             for(int j=i+1;j<n;j++){
