@@ -30,7 +30,6 @@ class Solution
             }
         }
         
-        
         v.push_back(-1);
         return v;
     }
