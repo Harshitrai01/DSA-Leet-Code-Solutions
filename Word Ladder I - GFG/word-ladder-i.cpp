@@ -5,27 +5,32 @@ using namespace std;
 // } Driver Code Ends
 class Solution {
 public:
-    int wordLadderLength(string start, string target, vector<string>& wordList) {
+    int wordLadderLength(string startWord, string targetWord, vector<string>& wordList) {
+        unordered_set<string>us;
+        
+        for(auto x:wordList)
+            us.insert(x);
+            
         queue<pair<string,int>>q;
-        q.push({start,1});
-        unordered_set<string>st(wordList.begin(),wordList.end());
-        st.erase(start);
+        q.push({startWord,1});
+        us.erase(startWord);
+        
         while(!q.empty()){
-            string word=q.front().first;
-            int steps=q.front().second;
+            string s=q.front().first;
+            int level=q.front().second;
             q.pop();
-
-            if(word==target) return steps;
-            for(int i=0;i<word.size();i++){
-                char original=word[i];
+            if(s==targetWord)
+                return level;
+            for(int i=0;i<s.size();i++){
+                char original=s[i];
                 for(char ch='a';ch<='z';ch++){
-                    word[i]=ch;
-                    if(st.find(word)!=st.end()){
-                        q.push({word,steps+1});
-                        st.erase(word);
+                    s[i]=ch;
+                    if(us.find(s)!=us.end()){
+                        q.push({s,level+1});
+                        us.erase(s);
                     }
                 }
-                word[i]=original;
+                s[i]=original;
             }
         }
         return 0;
