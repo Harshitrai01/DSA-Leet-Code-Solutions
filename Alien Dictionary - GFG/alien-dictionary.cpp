@@ -9,42 +9,41 @@ using namespace std;
 
 class Solution{
     public:
-    // Create adjacency list and aplly topo sort.
     string findOrder(string dict[], int N, int K) {
-        vector<int>adj[K];
+        
+        vector<int> adj[K];
         for(int i=0;i<N-1;i++){
-            string s1=dict[i];
-            string s2=dict[i+1];
-            int len=min(s1.size(),s2.size());
-            // For trversing in string
-            for(int k=0;k<len;k++){
-                if(s1[k]!=s2[k]){
-                    adj[s1[k]-'a'].push_back(s2[k]-'a');
+            for(int j=0;j<min(dict[i].size(),dict[i+1].size());j++){
+                if(dict[i][j]!=dict[i+1][j]){
+                    adj[dict[i][j]-'a'].push_back(dict[i+1][j]-'a');
                     break;
                 }
             }
         }
-        // Applying topo sort for the sequence;
+        
         vector<int>indegree(K,0);
         for(int i=0;i<K;i++){
             for(auto x:adj[i]){
                 indegree[x]++;
             }
         }
-        string ans="";
+        
         queue<int>q;
+        string ans="";
         for(int i=0;i<K;i++){
             if(indegree[i]==0)
                 q.push(i);
         }
+        
         while(!q.empty()){
             int u=q.front();
-            q.pop();
             ans+=(char)(u+'a');
+            q.pop();
             for(auto x:adj[u]){
                 indegree[x]--;
-                if(indegree[x]==0)
+                if(indegree[x]==0){
                     q.push(x);
+                }
             }
         }
         return ans;
