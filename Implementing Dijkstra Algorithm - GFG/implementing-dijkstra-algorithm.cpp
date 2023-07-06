@@ -11,28 +11,35 @@ class Solution
     //from the source vertex S.
     vector <int> dijkstra(int V, vector<vector<int>> adj[], int S)
     {
-        // We will use min heap priority queue to store the distances and edges.
-        // pq is needed to sort the distance in increasing order so that minimum
-        //                                          can be always accessed first.
-        // We will use pairs to store {distance,node} in min heap pq.
+        // We can use set also to erase the distances which are going to take
+        // extra iterations for no use. (10,5) and (8,5). We will remove (10,5).
         
-        // Creating a min heap priority queue.
-        priority_queue<Pair, vector<Pair>, greater<Pair>>pq;
-        pq.push({0,S});
+        // This doest not improve much time complexity but it improves or minimizes
+        // the extra iterations.
+        
+        set<Pair>s;
+        s.insert({0,S});
         vector<int>dist(V,1e9);
         dist[S]=0;
         
-        while(!pq.empty()){
-            int u=pq.top().second;
-            pq.pop();
-            for(auto it:adj[u]){
+        while(!s.empty()){
+            auto it=*(s.begin());
+            int u=it.second;
+            s.erase(it);
+            for(auto it1:adj[u]){
                 // Getting adjacent node and wt (u to v).
-                int v=it[0];
-                int wt=it[1];
+                int v=it1[0];
+                int wt=it1[1];
                 
                 if(dist[v]>dist[u]+wt){
+                    
+                    // If the exists previously and we founded the better one,
+                    // remove the preveious one whcih will dave iterations.
+                    if(dist[v]!=1e9)
+                        s.erase({dist[v],v});
+                    
                     dist[v]=dist[u]+wt;
-                    pq.push({dist[v],v});
+                    s.insert({dist[v],v});
                 }
             }
         }
