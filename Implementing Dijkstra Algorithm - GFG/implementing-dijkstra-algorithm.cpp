@@ -12,6 +12,8 @@ class Solution
     vector <int> dijkstra(int V, vector<vector<int>> adj[], int S)
     {
         // We will use min heap priority queue to store the distances and edges.
+        // pq is needed to sort the distance in increasing order so that minimum
+        //                                          can be always accessed first.
         // We will use pairs to store {distance,node} in min heap pq.
         
         // Creating a min heap priority queue.
@@ -21,16 +23,15 @@ class Solution
         dist[S]=0;
         
         while(!pq.empty()){
-            // Extracting the node and distance upto that node.
-            int dis=pq.top().first;
             int u=pq.top().second;
             pq.pop();
             for(auto it:adj[u]){
                 // Getting adjacent node and wt (u to v).
                 int v=it[0];
                 int wt=it[1];
-                if(dist[v]>dis+wt){
-                    dist[v]=dis+wt;
+                
+                if(dist[v]>dist[u]+wt){
+                    dist[v]=dist[u]+wt;
                     pq.push({dist[v],v});
                 }
             }
