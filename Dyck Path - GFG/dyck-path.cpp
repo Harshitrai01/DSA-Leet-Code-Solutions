@@ -1,0 +1,43 @@
+//{ Driver Code Starts
+
+#include <bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+
+class Solution {
+  public:
+    long long dyckPaths(int n) {
+        long long dp[n][n+1];
+        for(int j=0;j<n+1;j++){
+            for(int i=0;i<n;i++){
+                if(j==0){
+                    dp[i][j]=1;
+                }
+                else if(i==j-1){
+                    dp[i][j]=dp[i][j-1];
+                }
+                else{
+                    dp[i][j]=(dp[i][j-1]+dp[i-1][j]);
+                }
+            }
+        }
+        return dp[n-1][n];
+    }
+};
+
+//{ Driver Code Starts.
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        int N;
+        
+        cin>>N;
+
+        Solution ob;
+        cout << ob.dyckPaths(N) << endl;
+    }
+    return 0;
+}
+// } Driver Code Ends
